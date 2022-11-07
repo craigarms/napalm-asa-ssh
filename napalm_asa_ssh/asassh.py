@@ -255,12 +255,12 @@ class AsaSSHDriver(NetworkDriver):
 
         data = {}
 
-        if int(output["packet_sent"]) == int(output["packet_lost"]):
+        if int(output["success_qty"]) == 0:
             data["error"] = f"unknown host {destination}"
         else:
             data["success"] = {
-                "probes_sent": int(output["packet_sent"]),
-                "packet_loss": int(output["packet_lost"]),
+                "probes_sent": int(output["sent_qty"]),
+                "packet_loss": int(output["sent_qty"]) - int(output["success_qty"]),
                 "rtt_min": float(output["rtt_min"]),
                 "rtt_max": float(output["rtt_max"]),
                 "rtt_avg": float(output["rtt_avg"]),
