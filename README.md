@@ -13,6 +13,28 @@ This Driver has been tested against the following devices/versions
 
 The driver is under development and iteration.
 
+## Quick start
+
+```python
+from napalm import get_network_driver
+driver = get_network_driver('asa_ssh')
+device = driver(hostname='192.168.76.10', username='admin', password='this_is_not_a_secure_password')
+device.open()
+
+# Send Any CLI command
+send_command = device.cli(['show version'])
+
+#  Return general device information
+get_facts = device.get_facts()
+print(get_facts)
+
+# other API
+device.get_config()
+device.get_arp_table()
+
+
+```
+
 ### Get info
 | API   | Description  |
 |--------|-----|
@@ -37,24 +59,38 @@ The driver is under development and iteration.
 
 TODO: When I figure out how to get onto PyPi
 
-## Quick start
 
-```python
-from napalm import get_network_driver
-driver = get_network_driver('asa_ssh')
-device = driver(hostname='192.168.76.10', username='admin', password='this_is_not_a_secure_password')
-device.open()
+## Supported Getters
 
-# Send Any CLI command
-send_command = device.cli(['show version'])
+Getter order is sort of a priority list to support
 
-#  Return general device information
-get_facts = device.get_facts()
-print(get_facts)
-
-# other API
-device.get_config()
-device.get_arp_table()
-
-
-```
+| Getter                    | Support  |
+|---------------------------|----------|
+| get_facts                 |  ✅      |
+| is_alive                  |  ✅      |
+| ping                      |  ✅      |
+| get_config                |  ✅      |
+| get_arp_table             |  ✅      |
+| get_interfaces            |  ❌      |
+| get_interfaces_ip         |  ❌      |
+| get_interfaces_counters   |  ❌      |
+| get_environment           |  ❌      |
+| traceroute                |  ❌      |
+| get_route_to              |  ❌      |
+| get_firewall_policies     |  ❌      |
+| get_mac_address_table     |  ❌      |
+| get_snmp_information      |  ❌      |
+| get_users                 |  ❌      |
+| get_bgp_config            |  ❌      |
+| get_bgp_neighbors         |  ❌      |
+| get_bgp_neighbors_detail  |  ❌      |
+| get_ipv6_neighbors_table  |  ❌      |
+| get_network_instances     |  ❌      |
+| get_ntp_peers             |  ❌      |
+| get_ntp_servers           |  ❌      |
+| get_ntp_stats             |  ❌      |
+| get_optics                |  ❌      |
+| get_probes_config         |  ❌      |
+| get_probes_results        |  ❌      |
+| get_lldp_neighbors        |  ❌      |
+| get_lldp_neighbors_detail |  ❌      |
