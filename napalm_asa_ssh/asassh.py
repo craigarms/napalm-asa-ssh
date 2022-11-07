@@ -250,7 +250,7 @@ class AsaSSHDriver(NetworkDriver):
         vrf: str = "",
         source_interface: str = "",
     ) -> models.PingResultDict:
-        command = f"ping {self._get_ip_version(destination)} {destination} size {size} count {count}"
+        command = f"ping {destination} size {size} repeat {count}"
         output = self._send_command(command, use_textfsm=True)[0]
 
         data = {}
