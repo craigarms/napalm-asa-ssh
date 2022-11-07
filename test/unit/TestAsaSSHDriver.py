@@ -16,7 +16,7 @@
 
 import unittest
 
-from napalm_asa_ssh import asa
+from napalm_asa_ssh import asassh
 from napalm.base.test.base import TestConfigNetworkDriver
 
 
@@ -25,16 +25,12 @@ class TestConfigAsaSSHDriver(unittest.TestCase, TestConfigNetworkDriver):
 
     @classmethod
     def setUpClass(cls):
-        """Run before starting the tests."""
-        hostname = '127.0.0.1'
-        username = 'vagrant'
-        password = 'vagrant'
-        cls.vendor = 'skeleton'
-
-        optional_args = {'port': 12443, }
-        cls.device = asa.AsaSSHDriver(hostname, username, password, timeout=60,
-                                             optional_args=optional_args)
+        """Executed when the class is instantiated."""
+        cls.vendor = "cisco"
+        cls.device = asassh.AsaSSHDriver(
+            "127.0.0.1",
+            "user",
+            "password",
+            timeout=60,
+        )
         cls.device.open()
-
-        cls.device.load_replace_candidate(filename='%s/initial.conf' % cls.vendor)
-        cls.device.commit_config()

@@ -2,9 +2,11 @@
 from builtins import super
 
 import pytest
+from napalm.base import models
 from napalm.base.test import conftest as parent_conftest
 
 from napalm.base.test.double import BaseTestDouble
+from netmiko.utilities import get_structured_data
 
 from napalm_asa_ssh import AsaSSHDriver
 
@@ -37,21 +39,29 @@ class PatchedAsaSSHDriver(AsaSSHDriver):
         self.patched_attrs = ['device']
         self.device = FakeAsaSSHDevice()
 
+    def open(self):
+        pass
+
+    def close(self) -> None:
+        pass
+
+    def is_alive(self):
+        return {"is_alive": True}
+
 
 class FakeAsaSSHDevice(BaseTestDouble):
     """AsaSSH device test double."""
 
-    def run_commands(self, command_list, encoding='json'):
-        """Fake run_commands."""
-        result = list()
+    def __init__(self):
+        self.device_type = "cisco_asa"
 
-        for command in command_list:
-            filename = '{}.{}'.format(self.sanitize_text(command), encoding)
-            full_path = self.find_file(filename)
+    def send_command(self, command, **kwargs):
+        filename = "{}.txt".format(self.sanitize_text(command))
+        full_path = self.find_file(filename)
+        data = self.read_txt_file(full_path)
 
-            if encoding == 'json':
-                result.append(self.read_json_file(full_path))
-            else:
-                result.append({'output': self.read_txt_file(full_path)})
+        if kwargs["use_textfsm"]:
+            data = get_structured_data(data, platform=self.device_type, command=command)
 
-        return result
+        return data
+
