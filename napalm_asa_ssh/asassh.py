@@ -206,22 +206,22 @@ class AsaSSHDriver(NetworkDriver):
         return data
 
     def get_facts(self) -> models.FactsDict:
-        commands = ["show system", "show version", "show interfaces brief"]
+        commands = ["show version"]
         output = {}
         for command in commands:
             output[command] = self._send_command(command, use_textfsm=True)
 
         data = {
-            "uptime": self._format_uptime(output["show system"][0]["uptime"]),
+            "uptime": self._format_uptime(output["show version"][0]["uptime"]),
             "vendor": self.vendor,
-            "os_version": output["show version"][0]["os_version"],
-            "serial_number": output["show version"][0]["serial_number"],
-            "model": "",
+            "os_version": output["show version"][0]["version"],
+            "serial_number": output["show version"][0]["serial"],
+            "model": output["show version"][0]["model"],
             "hostname": output["show system"][0]["hostname"],
             "fqdn": "",
             "interface_list": [
-                self._format_interface_name(entry["interface"])
-                for entry in output["show interfaces brief"]
+                self._format_interface_name(entry)
+                for entry in output["show version"][0]["interfaces"]
             ],
         }
 
