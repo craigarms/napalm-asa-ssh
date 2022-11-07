@@ -1,0 +1,3 @@
+include requirements.txt
+include napalm_asa-ssh/templates/*.j2
+include napalm_asa-ssh/utils/textfsm_templates/*.tpl
