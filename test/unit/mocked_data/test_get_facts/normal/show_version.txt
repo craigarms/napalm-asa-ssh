@@ -1,0 +1,94 @@
+
+Cisco Adaptive Security Appliance Software Version 9.2(2)4 <context>
+Device Manager Version 7.2(2)1
+
+Compiled on Tue 29-Jul-14 23:41 PDT by builders
+
+MY-ASA-FWA001 up 26 days 14 hours
+failover cluster up 26 days 14 hours
+
+Hardware:   ASA5545, 12288 MB RAM, CPU Lynnfield 2660 MHz, 1 CPU (8 cores)
+            ASA: 6144 MB RAM, 1 CPU (1 core)
+Internal ATA Compact Flash, 8192MB
+BIOS Flash MX25L6445E @ 0xffbb0000, 8192KB
+
+Encryption hardware device : Cisco ASA-55xx on-board accelerator (revision 0x1)
+                             Boot microcode        : CNPx-MC-BOOT-2.00
+                             SSL/IKE microcode     : CNPx-MC-SSL-PLUS-T020
+                             IPSec microcode       : CNPx-MC-IPSEC-MAIN-0026
+                             Number of accelerators: 1
+Baseboard Management Controller (revision 0x1) Firmware Version: 2.4
+
+
+ 0: Int: Internal-Data0/0    : address is 0081.ffdd.b8c8, irq 11
+ 1: Ext: GigabitEthernet0/0  : address is 0081.ffdd.b8cd, irq 5
+ 2: Ext: GigabitEthernet0/1  : address is 0081.ffdd.b8c9, irq 5
+ 3: Ext: GigabitEthernet0/2  : address is 0081.ffdd.b8ce, irq 10
+ 4: Ext: GigabitEthernet0/3  : address is 0081.ffdd.b8ca, irq 10
+ 5: Ext: GigabitEthernet0/4  : address is 0081.ffdd.b8cf, irq 5
+ 6: Ext: GigabitEthernet0/5  : address is 0081.ffdd.b8cb, irq 5
+ 7: Ext: GigabitEthernet0/6  : address is 0081.ffdd.b8d0, irq 10
+ 8: Ext: GigabitEthernet0/7  : address is 0081.ffdd.b8cc, irq 10
+ 9: Int: Internal-Data0/1    : address is 0000.ffdd.0002, irq 0
+10: Int: Internal-Control0/0 : address is 0000.ffdd.0001, irq 0
+11: Int: Internal-Data0/2    : address is 0000.ffdd.0003, irq 0
+12: Ext: Management0/0       : address is 0081.ffdd.b8c8, irq 0
+
+Licensed features for this platform:
+Maximum Physical Interfaces       : Unlimited      perpetual
+Maximum VLANs                     : 300            perpetual
+Inside Hosts                      : Unlimited      perpetual
+Failover                          : Active/Active  perpetual
+Encryption-DES                    : Enabled        perpetual
+Encryption-3DES-AES               : Enabled        perpetual
+Security Contexts                 : 2              perpetual
+GTP/GPRS                          : Disabled       perpetual
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 2500           perpetual
+Total VPN Peers                   : 2500           perpetual
+Shared License                    : Disabled       perpetual
+AnyConnect for Mobile             : Disabled       perpetual
+AnyConnect for Cisco VPN Phone    : Disabled       perpetual
+Advanced Endpoint Assessment      : Disabled       perpetual
+UC Phone Proxy Sessions           : 2              perpetual
+Total UC Proxy Sessions           : 2              perpetual
+Botnet Traffic Filter             : Disabled       perpetual
+Intercompany Media Engine         : Disabled       perpetual
+IPS Module                        : Disabled       perpetual
+Cluster                           : Enabled        perpetual
+Cluster Members                   : 2              perpetual
+
+This platform has an ASA5545 VPN Premium license.
+
+
+Failover cluster licensed features for this platform:
+Maximum Physical Interfaces       : Unlimited      perpetual
+Maximum VLANs                     : 300            perpetual
+Inside Hosts                      : Unlimited      perpetual
+Failover                          : Active/Active  perpetual
+Encryption-DES                    : Enabled        perpetual
+Encryption-3DES-AES               : Enabled        perpetual
+Security Contexts                 : 2              perpetual
+GTP/GPRS                          : Disabled       perpetual
+AnyConnect Premium Peers          : 2              perpetual
+AnyConnect Essentials             : Disabled       perpetual
+Other VPN Peers                   : 2500           perpetual
+Total VPN Peers                   : 2500           perpetual
+Shared License                    : Disabled       perpetual
+AnyConnect for Mobile             : Disabled       perpetual
+AnyConnect for Cisco VPN Phone    : Disabled       perpetual
+Advanced Endpoint Assessment      : Disabled       perpetual
+UC Phone Proxy Sessions           : 2              perpetual
+Total UC Proxy Sessions           : 2              perpetual
+Botnet Traffic Filter             : Disabled       perpetual
+Intercompany Media Engine         : Disabled       perpetual
+IPS Module                        : Disabled       perpetual
+Cluster                           : Enabled        perpetual
+
+This platform has an ASA5545 VPN Premium license.
+
+Serial Number: FCH20222A01
+Running Permanent Activation Key: 0xAA25AA48 0xAA25AA48 0xAA25AA48 0xAA25AA48 0xAA25AA48
+Configuration register is 0x1
+Configuration last modified by craig at 19:34:07.608 UTC Mon Nov 7 2022

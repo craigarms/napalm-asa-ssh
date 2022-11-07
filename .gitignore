@@ -64,3 +64,4 @@ target/
 
 #IDE
 .idea
+*.bak

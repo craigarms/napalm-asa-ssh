@@ -1,0 +1,12 @@
+[{"age": -1.0,
+  "interface": "MGMT",
+  "ip": "10.10.239.113",
+  "mac": "0008.e3ff.fdff"},
+ {"age": -1.0,
+  "interface": "ASA_Interco",
+  "ip": "10.10.76.1",
+  "mac": "0008.e3ff.fdff"},
+ {"age": -1.0,
+  "interface": "AsaCoreInterco",
+  "ip": "10.10.75.5",
+  "mac": "084f.f919.ddff"}]
