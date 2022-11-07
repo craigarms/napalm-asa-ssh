@@ -217,7 +217,7 @@ class AsaSSHDriver(NetworkDriver):
             "os_version": output["show version"][0]["version"],
             "serial_number": output["show version"][0]["serial"],
             "model": output["show version"][0]["model"],
-            "hostname": output["show system"][0]["hostname"],
+            "hostname": output["show version"][0]["hostname"],
             "fqdn": "",
             "interface_list": [
                 self._format_interface_name(entry)
