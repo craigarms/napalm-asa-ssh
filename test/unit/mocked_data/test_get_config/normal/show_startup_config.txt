@@ -1,0 +1,381 @@
+ASA Version 9.2(2)4 <context>
+!
+hostname ciscoasa
+enable password JDZ8jjgb9rcYYtX55 encrypted
+names
+!
+interface Management0/0
+ management-only
+ shutdown
+ nameif MGMT
+ security-level 0
+ ip address 10.11.90.100 255.255.255.0
+!
+interface Port-channel1.3175
+ description AsaCoreInterco
+ nameif AsaCoreInterco
+ security-level 50
+ ip address 10.11.75.10 255.255.255.0 standby 10.11.75.12
+!
+interface Port-channel1.3176
+ description CP_ASA_Interco
+ nameif CP_ASA_Interco
+ security-level 50
+ ip address 10.11.76.10 255.255.255.0 standby 10.11.76.12
+!
+same-security-traffic permit inter-interface
+same-security-traffic permit intra-interface
+object network DCP01
+ host 10.11.220.10
+object network DCP02
+ host 10.11.220.11
+object network CLNESXP01
+ host 10.11.220.12
+object network CLNESXP02
+ host 10.11.220.13
+object network BKPP01
+ host 10.11.220.14
+object network DPCELLP01
+ host 10.11.220.15
+object network APPVCP01
+ host 10.11.220.16
+object network ADMINP01
+ host 10.11.220.17
+object network FSP01
+ host 10.11.220.18
+object network PRINTP01
+ host 10.11.220.19
+object network WSUSP01
+ host 10.11.220.20
+object network RADP01
+ host 10.11.220.21
+object network DHCP01
+ host 10.11.220.22
+object network DHCP02
+ host 10.11.220.23
+object network SEPP01
+ host 10.11.220.24
+object network KMSP01
+ host 10.11.220.25
+object network VMTEMPLATE
+ host 10.11.220.26
+object network DCP01-ILO
+ host 10.11.90.10
+object network DCP02-ILO
+ host 10.11.90.11
+object network BKPP01-ILO
+ host 10.11.90.12
+object network CLNESXP01-ILO
+ host 10.11.90.13
+object network CLNESXP02-ILO
+ host 10.11.90.14
+object network STOMSAP01-CTL1
+ host 10.11.90.15
+object network STOMSAP01-CTL2
+ host 10.11.90.16
+object network SWSANP01F1
+ host 10.11.90.17
+object network SWSANP01F2
+ host 10.11.90.18
+object network LIBP01
+ host 10.11.90.19
+object network KVMP01
+ host 10.11.90.20
+object network UPSP01
+ host 10.11.90.21
+object network DMZ_SHARED_SERVICES
+ subnet 10.10.48.0 255.255.254.0
+object network OFFICE_USERS
+ subnet 192.168.216.0 255.255.255.0
+object network OFFICE_PRINTERS
+ subnet 192.168.218.0 255.255.255.192
+object network SW_MANAGEMENT
+ subnet 10.10.39.0 255.255.255.192
+object network VTC
+ subnet 7.85.1.224 255.255.255.224
+object network ILO_MANAGEMENT
+ subnet 192.168.219.128 255.255.255.224
+object network VOIP
+ subnet 192.168.217.0 255.255.255.128
+object network WAN1
+ subnet 172.16.99.16 255.255.255.252
+object network WAN2
+ subnet 172.16.99.20 255.255.255.252
+object network INTERCO_FW
+ subnet 10.58.221.112 255.255.255.240
+object network INFRA_PROD
+ subnet 192.168.219.160 255.255.255.224
+object network DMZ1
+ subnet 10.10.39.96 255.255.255.240
+object network Jumpbox_VLAN1
+ subnet 192.168.219.192 255.255.255.248
+object network GROUP_APP_PROD
+ subnet 10.10.39.64 255.255.255.224
+object network USERS512
+ subnet 192.168.218.64 255.255.255.192
+object network PRINTERS2
+ subnet 192.168.219.96 255.255.255.224
+object network USER256
+ subnet 192.168.217.128 255.255.255.192
+object network USER1024
+ subnet 192.168.219.64 255.255.255.224
+object network Access_Control
+ subnet 192.168.218.128 255.255.255.192
+object network BMS
+ subnet 192.168.218.192 255.255.255.192
+object network DEVICES512
+ subnet 192.168.217.192 255.255.255.192
+object network CCTV
+ subnet 192.168.219.0 255.255.255.192
+object network INTERCO_WAN
+ subnet 10.10.39.112 255.255.255.240
+object network WIFI_TERMINALS
+ subnet 10.58.250.96 255.255.255.224
+object network WIFI_AP
+ subnet 10.58.250.64 255.255.255.224
+object network PROD64
+ subnet 192.168.220.0 255.255.255.240
+object network WITNESS_TRAFIC
+ subnet 192.168.220.16 255.255.255.248
+object network DMZ32
+ subnet 192.168.220.24 255.255.255.248
+object network WIFI_MGMT
+ subnet 10.58.252.0 255.255.255.128
+object network G0350_vMotion
+ subnet 10.58.221.128 255.255.255.248
+object network G0351_vSAN
+ subnet 10.58.221.136 255.255.255.248
+object network WIFI_USERS
+ subnet 10.66.44.0 255.255.252.0
+object network AsaCoreInterco
+ subnet 10.11.220.0 255.255.255.0
+object network Indus
+ subnet 10.11.230.0 255.255.255.0
+object network Indus_WIFI
+ subnet 10.11.232.0 255.255.255.0
+object network PRINTERS2
+ subnet 10.11.34.0 255.255.255.0
+object network Vendors
+ subnet 10.11.240.0 255.255.255.0
+object network Office
+ subnet 10.11.10.0 255.255.255.0
+object network WIFI
+ subnet 10.11.12.0 255.255.255.0
+object network Office_Printers
+ subnet 10.11.20.0 255.255.255.0
+object network WAN_Inside
+ subnet 10.11.77.0 255.255.255.0
+object network WAN_Outside
+ subnet 10.11.78.0 255.255.255.0
+object network MGMT
+ subnet 10.11.90.0 255.255.255.0
+object network AP_MGMT
+ subnet 10.11.92.0 255.255.255.0
+object network 10.66.SW3060
+ host 10.11.90.1
+object network 10.66.WLC002
+ host 10.11.12.4
+object network G_Users
+ subnet 10.11.10.0 255.255.255.0
+object network 10.66.FWA002
+ host 10.11.90.101
+object network 10.66.FWA001
+ host 10.11.75.10
+object-group network All_Local
+ network-object object AsaCoreInterco
+ network-object object Indus
+ network-object object Indus_WIFI
+ network-object object PRINTERS2
+ network-object object Vendors
+ network-object object Office
+ network-object object WIFI
+ network-object object Office_Printers
+ network-object object WAN_Inside
+ network-object object WAN_Outside
+ network-object object MGMT
+ network-object object AP_MGMT
+object-group network All_Remote
+ network-object object DMZ_SHARED_SERVICES
+ network-object object OFFICE_USERS
+ network-object object OFFICE_PRINTERS
+ network-object object SW_MANAGEMENT
+ network-object object VTC
+ network-object object ILO_MANAGEMENT
+ network-object object VOIP
+ network-object object WAN1
+ network-object object WAN2
+ network-object object INTERCO_FW
+ network-object object INFRA_PROD
+ network-object object DMZ1
+ network-object object Jumpbox_VLAN1
+ network-object object GROUP_APP_PROD
+ network-object object USERS512
+ network-object object PRINTERS2
+ network-object object USER256
+ network-object object USER1024
+ network-object object Access_Control
+ network-object object BMS
+ network-object object DEVICES512
+ network-object object CCTV
+ network-object object INTERCO_WAN
+ network-object object WIFI_TERMINALS
+ network-object object WIFI_AP
+ network-object object PROD64
+ network-object object WITNESS_TRAFIC
+ network-object object DMZ32
+ network-object object WIFI_MGMT
+ network-object object G0350_vMotion
+ network-object object G0351_vSAN
+ network-object object WIFI_USERS
+access-list global_access extended permit ip any any
+access-list CP_ASA_Interco_in extended permit ip any any
+access-list AsaCoreInterco_in extended permit ip any any
+pager lines 24
+mtu MGMT 1500
+mtu CP_ASA_Interco 1500
+mtu AsaCoreInterco 1500
+icmp unreachable rate-limit 1 burst-size 1
+no asdm history enable
+arp timeout 14400
+nat (CP_ASA_Interco,AsaCoreInterco) source static All_Remote All_Remote destination static All_Local All_Local
+!
+object network DCP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255128
+object network DCP02
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255129
+object network CLNESXP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255130
+object network CLNESXP02
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255131
+object network BKPP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255132
+object network DPCELLP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255133
+object network APPVCP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255134
+object network ADMINP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255135
+object network FSP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255136
+object network PRINTP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255137
+object network WSUSP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255138
+object network RADP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255139
+object network DHCP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255140
+object network DHCP02
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255141
+object network SEPP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255142
+object network KMSP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255143
+object network VMTEMPLATE
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255144
+object network DCP01-ILO
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255147
+object network DCP02-ILO
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255148
+object network BKPP01-ILO
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255149
+object network CLNESXP01-ILO
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255150
+object network CLNESXP02-ILO
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255151
+object network STOMSAP01-CTL1
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255152
+object network STOMSAP01-CTL2
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255153
+object network SWSANP01F1
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255154
+object network SWSANP01F2
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255155
+object network LIBP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255156
+object network KVMP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255157
+object network UPSP01
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255158
+object network 10.66.SW3060
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255159
+object network 10.66.WLC002
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.58.252.3
+object network G_Users
+ nat (AsaCoreInterco,CP_ASA_Interco) dynamic 10.255.255250
+object network 10.66.FWA001
+ nat (AsaCoreInterco,CP_ASA_Interco) static 10.255.255160
+access-group CP_ASA_Interco_in in interface CP_ASA_Interco
+access-group AsaCoreInterco_in in interface AsaCoreInterco
+access-group global_access global
+router bgp 65000
+ address-family ipv4 unicast
+  neighbor 10.11.75.5 remote-as 65000
+  neighbor 10.11.75.5 activate
+  redistribute connected
+  redistribute static
+  no auto-summary
+  no synchronization
+ exit-address-family
+!
+route CP_ASA_Interco 0.0.0.0 0.0.0.0 10.11.76.1 2
+timeout xlate 3:00:00
+timeout pat-xlate 0:00:30
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
+timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
+timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
+timeout tcp-proxy-reassembly 0:01:00
+timeout floating-conn 0:00:00
+user-identity default-domain LOCAL
+aaa authentication ssh console LOCAL
+no snmp-server location
+no snmp-server contact
+crypto ipsec security-association pmtu-aging infinite
+telnet timeout 5
+ssh stricthostkeycheck
+ssh 0.0.0.0 0.0.0.0 MGMT
+ssh 0.0.0.0 0.0.0.0 CP_ASA_Interco
+ssh 0.0.0.0 0.0.0.0 AsaCoreInterco
+ssh timeout 60
+ssh key-exchange group dh-group14-sha1
+no threat-detection statistics tcp-intercept
+username craig password JDZ8jjgb9rcYYtX55 encrypted privilege 15
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+policy-map global_policy
+ class inspection_default
+  inspect ftp
+  inspect h323 h225
+  inspect h323 ras
+  inspect ip-options
+  inspect netbios
+  inspect rsh
+  inspect rtsp
+  inspect skinny
+  inspect esmtp
+  inspect sqlnet
+  inspect sunrpc
+  inspect tftp
+  inspect sip
+  inspect xdmcp
+  inspect dns preset_dns_map
+policy-map type inspect dns migrated_dns_map_2
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+policy-map type inspect dns migrated_dns_map_1
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+!
+service-policy global_policy global
+Cryptochecksum:ca05ea3d1eeec24d833397706b347de1
+: end
