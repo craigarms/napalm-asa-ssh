@@ -2,6 +2,8 @@
 
 It's a NAPALM Community Driver for Cisco ASA Firewalls using SSH, for ASAv and versions not able to use the REST API
 
+[![Pytest](https://github.com/craigarms/napalm-asa-ssh/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/craigarms/napalm-asa-ssh/actions/workflows/python-app.yml)
+
 ## Supported Cisco ASA
 
 This Driver has been tested against the following devices/versions
@@ -31,8 +33,6 @@ print(get_facts)
 # other API
 device.get_config()
 device.get_arp_table()
-
-
 ```
 
 ### Get info
