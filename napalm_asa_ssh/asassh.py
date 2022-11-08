@@ -35,7 +35,6 @@ from napalm.base.exceptions import ConnectionClosedException
 from ipaddress import IPv4Address, IPv4Network, ip_address
 
 
-
 class AsaSSHDriver(NetworkDriver):
     platform = "cisco_asa"
     """Napalm driver for AsaSSH."""
@@ -188,6 +187,8 @@ class AsaSSHDriver(NetworkDriver):
         return data
 
     def get_arp_table(self, vrf: str = "") -> List[models.ARPTableDict]:
+        # TODO: Fix ARP Table template for entry age
+        # TODO: Fix ARP Table template for interface name not supporting dashes
         command = "show arp"
         output = self._send_command(command, use_textfsm=True)
 
@@ -215,7 +216,7 @@ class AsaSSHDriver(NetworkDriver):
             "uptime": self._format_uptime(output["show version"][0]["uptime"]),
             "vendor": self.vendor,
             "os_version": output["show version"][0]["version"],
-            "serial_number": output["show version"][0]["serial"],
+            "serial_number": output["show version"][0]["serial"][0],
             "model": output["show version"][0]["model"],
             "hostname": output["show version"][0]["hostname"],
             "fqdn": "",
