@@ -187,8 +187,6 @@ class AsaSSHDriver(NetworkDriver):
         return data
 
     def get_arp_table(self, vrf: str = "") -> List[models.ARPTableDict]:
-        # TODO: Fix ARP Table template for entry age
-        # TODO: Fix ARP Table template for interface name not supporting dashes
         command = "show arp"
         output = self._send_command(command, use_textfsm=True)
 
@@ -197,10 +195,10 @@ class AsaSSHDriver(NetworkDriver):
         for entry in output:
             data.append(
                 {
-                    "interface": self._format_interface_name(entry["interface"]),
+                    "interface": entry["interface"],
                     "mac": entry["mac"],
                     "ip": entry["address"],
-                    "age": -1.0,
+                    "age": entry["age"],
                 }
             )
 
