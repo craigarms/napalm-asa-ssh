@@ -33,14 +33,18 @@ print(get_facts)
 # other API
 device.get_config()
 device.get_arp_table()
+device.get_interfaces()
+device.get_interfaces_ip()
 ```
 
 ### Get info
-| API   | Description  |
-|--------|-----|
-|  get_facts()                |  Return general device information |
-|  get_config()               |  Read config |
-|  get_arp_table()            |  Get device ARP table |
+| API                 | Description                       |
+|---------------------|-----------------------------------|
+| get_facts()         | Return general device information |
+| get_config()        | Read config                       |
+| get_arp_table()     | Get device ARP table              |
+| get_intefaces()     | Get device Interfaces             |
+| get_interfaces_ip() | Get device Interfaces IP           |
 
 ### Config
 
@@ -71,8 +75,8 @@ Getter order is sort of a priority list to support
 | ping                      |  ✅      |
 | get_config                |  ✅      |
 | get_arp_table             |  ✅      |
-| get_interfaces            |  ❌      |
-| get_interfaces_ip         |  ❌      |
+| get_interfaces            |  ✅      |
+| get_interfaces_ip         |  ✅      |
 | get_interfaces_counters   |  ❌      |
 | get_environment           |  ❌      |
 | traceroute                |  ❌      |

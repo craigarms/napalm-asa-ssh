@@ -75,6 +75,22 @@ def _parse_interface_data(interface: Dict[str, Any]) -> models.InterfaceDict:
     return data
 
 
+def _parse_interface_ip_data(interface: Dict[str, Any]) -> models.InterfaceDict:
+    """
+    Parse interface IP data from ASA output
+    """
+    data = {
+        "ipv4": {
+            interface["ip"]: {
+                "prefix_length": int(IPv4Network(f'0.0.0.0/{interface["netmask"]}').prefixlen),
+            }
+        },
+        "ipv6": {},
+    }
+
+    return data
+
+
 class AsaSSHDriver(NetworkDriver):
     platform = "cisco_asa"
     """Napalm driver for AsaSSH."""
@@ -392,5 +408,75 @@ class AsaSSHDriver(NetworkDriver):
                         elif isinstance(output[0][0]["interface"], dict):
                             data[output[0][0]["interface"]["phy_if"]] = _parse_interface_data(
                                 output[0][0]["interface"])
+        return data
+
+    def get_interfaces_ip(self) -> Dict[str, models.InterfacesIPDict]:
+        """
+        Returns all configured IP addresses on all interfaces as a dictionary of dictionaries.
+        Keys of the main dictionary represent the name of the interface.
+        Values of the main dictionary represent are dictionaries that may consist of two keys
+        'ipv4' and 'ipv6' (one, both or none) which are themselves dictionaries with the IP
+        addresses as keys.
+        Each IP Address dictionary has the following keys:
+
+            * prefix_length (int)
+
+        Example::
+
+            {
+                u'FastEthernet8': {
+                    u'ipv4': {
+                        u'10.66.43.169': {
+                            'prefix_length': 22
+                        }
+                    }
+                },
+                u'Loopback555': {
+                    u'ipv4': {
+                        u'192.168.1.1': {
+                            'prefix_length': 24
+                        }
+                    },
+                    u'ipv6': {
+                        u'1::1': {
+                            'prefix_length': 64
+                        },
+                        u'2001:DB8:1::1': {
+                            'prefix_length': 64
+                        },
+                        u'2::': {
+                            'prefix_length': 64
+                        },
+                        u'FE80::3': {
+                            'prefix_length': u'N/A'
+                        }
+                    }
+                },
+                u'Tunnel0': {
+                    u'ipv4': {
+                        u'10.63.100.9': {
+                            'prefix_length': 24
+                        }
+                    }
+                }
+            }
+        """
+        command = "show interface"
+        ttp_parsing = AsaTemplates()
+
+        interfaces = ttp_parsing.get_structured_data(self._send_command(command, use_textfsm=False), command=command,
+                                                 platform=self.device_type)
+
+        data = {}
+        if interfaces:
+            if len(interfaces) > 0:
+                if len(interfaces[0]) > 0:
+                    if "interface" in interfaces[0][0]:
+                        if isinstance(interfaces[0][0]["interface"], list):
+                            for interface in interfaces[0][0]["interface"]:
+                                data[interface["phy_if"]] = _parse_interface_ip_data(interface)
+                        elif isinstance(interfaces[0][0]["interface"], dict):
+                            data[interfaces[0][0]["interface"]["phy_if"]] = _parse_interface_ip_data(
+                                interfaces[0][0]["interface"])
         return data
 
