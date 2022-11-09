@@ -1,0 +1,11 @@
+{
+  "Port-channel1.2120": {
+    "is_up": true,
+    "is_enabled": true,
+    "description": "DMZ1",
+    "last_flapped": -1.0,
+    "speed": 0.0,
+    "mtu": 1500,
+    "mac_address": "00a0.c90f.0101"
+  }
+}

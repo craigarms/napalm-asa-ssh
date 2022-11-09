@@ -1,0 +1,9 @@
+Interface Port-channel1.2120 "DMZ1", is up, line protocol is up
+        System name Port-channel1.2120, VLAN identifier 2120
+        Description: DMZ1
+        MAC address 00a0.c90f.0101, MTU 1500
+        IP address 10.11.220.1, subnet mask 255.255.255.0
+  Traffic Statistics for "DMZ1":
+        232425960 packets input, 229896089864 bytes
+        192724873 packets output, 135202742182 bytes
+        662084 packets dropped

@@ -33,6 +33,46 @@ import socket
 import re
 from napalm.base.exceptions import ConnectionClosedException
 from ipaddress import IPv4Address, IPv4Network, ip_address
+from napalm_asa_ssh.utils.ttp_templates import AsaTemplates
+from netmiko.utilities import get_structured_data
+
+
+def _parse_interface_speed(speed: str) -> float:
+    """
+    Parse interface speed from ASA output
+    """
+    if speed == "auto":
+        return 0.0
+    elif speed == "10":
+        return 10.0
+    elif speed == "100":
+        return 100.0
+    elif speed == "1000":
+        return 1000.0
+    elif speed == "10000":
+        return 10000.0
+    elif speed == "40000":
+        return 40000.0
+    elif speed == "100000":
+        return 100000.0
+    else:
+        return 0.0
+
+
+def _parse_interface_data(interface: Dict[str, Any]) -> models.InterfaceDict:
+    """
+    Parse interface data from ASA output
+    """
+    data = {
+        "is_up": interface["line_state"] == "up",
+        "is_enabled": interface["admin_state"] == "up",
+        "description": interface["if_description"],
+        "last_flapped": -1.0,
+        "speed": _parse_interface_speed(interface["bandwidth"]),
+        "mtu": int(interface["mtu"]),
+        "mac_address": interface["mac"],
+    }
+    return data
 
 
 class AsaSSHDriver(NetworkDriver):
@@ -48,6 +88,7 @@ class AsaSSHDriver(NetworkDriver):
         self.timeout = timeout
         self.vendor = "cisco"
         self.device_type = "cisco_asa"
+        self.context = ""
 
         if optional_args is None:
             optional_args = {}
@@ -198,7 +239,7 @@ class AsaSSHDriver(NetworkDriver):
                     "interface": entry["interface"],
                     "mac": entry["mac"],
                     "ip": entry["address"],
-                    "age": entry["age"],
+                    "age": float(entry["age"]),
                 }
             )
 
@@ -208,7 +249,11 @@ class AsaSSHDriver(NetworkDriver):
         commands = ["show version"]
         output = {}
         for command in commands:
-            output[command] = self._send_command(command, use_textfsm=True)
+            output[command] = self._send_command(command, use_textfsm=False)
+            if "<context>" in output[command]:
+                self.context = True
+
+            output[command] = get_structured_data(output[command], platform=self.device_type, command=command)
 
         data = {
             "uptime": self._format_uptime(output["show version"][0]["uptime"]),
@@ -270,3 +315,82 @@ class AsaSSHDriver(NetworkDriver):
             }
 
         return data
+
+    def get_interfaces(self) -> Dict[str, models.InterfaceDict]:
+        """
+                Returns a dictionary of dictionaries. The keys for the first dictionary will be the \
+                interfaces in the devices. The inner dictionary will containing the following data for \
+                each interface:
+
+                 * is_up (True/False)
+                 * is_enabled (True/False)
+                 * description (string)
+                 * last_flapped (float in seconds)
+                 * speed (float in Mbit)
+                 * MTU (in Bytes)
+                 * mac_address (string)
+
+                Example::
+
+                    {
+                    u'Management1':
+                        {
+                        'is_up': False,
+                        'is_enabled': False,
+                        'description': '',
+                        'last_flapped': -1.0,
+                        'speed': 1000.0,
+                        'mtu': 1500,
+                        'mac_address': 'FA:16:3E:57:33:61',
+                        },
+                    u'Ethernet1':
+                        {
+                        'is_up': True,
+                        'is_enabled': True,
+                        'description': 'foo',
+                        'last_flapped': 1429978575.1554043,
+                        'speed': 1000.0,
+                        'mtu': 1500,
+                        'mac_address': 'FA:16:3E:57:33:62',
+                        },
+                    u'Ethernet2':
+                        {
+                        'is_up': True,
+                        'is_enabled': True,
+                        'description': 'bla',
+                        'last_flapped': 1429978575.1555667,
+                        'speed': 1000.0,
+                        'mtu': 1500,
+                        'mac_address': 'FA:16:3E:57:33:63',
+                        },
+                    u'Ethernet3':
+                        {
+                        'is_up': False,
+                        'is_enabled': True,
+                        'description': 'bar',
+                        'last_flapped': -1.0,
+                        'speed': 1000.0,
+                        'mtu': 1500,
+                        'mac_address': 'FA:16:3E:57:33:64',
+                        }
+                    }
+                """
+        command = "show interface"
+        ttp_parsing = AsaTemplates()
+
+        output = ttp_parsing.get_structured_data(self._send_command(command, use_textfsm=False), command=command,
+                                                 platform=self.device_type)
+
+        data = {}
+        if output:
+            if len(output) > 0:
+                if len(output[0]) > 0:
+                    if "interface" in output[0][0]:
+                        if isinstance(output[0][0]["interface"], list):
+                            for interface in output[0][0]["interface"]:
+                                data[interface["phy_if"]] = _parse_interface_data(interface)
+                        elif isinstance(output[0][0]["interface"], dict):
+                            data[output[0][0]["interface"]["phy_if"]] = _parse_interface_data(
+                                output[0][0]["interface"])
+        return data
+
