@@ -1,0 +1,22 @@
+<vars>
+default_values= {
+	"mtu": '',
+	"bandwidth": '',
+}
+
+</vars>
+<group name='interface' default="default_values">
+Interface {{ phy_if }} "{{ nameif | re('[\w\d\_\-]*') }}", is {{ admin_state }}, line protocol is {{ line_state }}
+  Hardware is {{ hardware | re('.*') }}, BW {{ bandwidth | re('[\d]+\s\w+') }}, DLY {{ delay }} usec
+		System name {{ phy_if }}, VLAN identifier {{ vlan_number }}
+		VLAN identifier {{ vlan_number }}
+        Description: {{ if_description }}
+        MAC address {{ mac }}, MTU {{ mtu }}
+        MAC address {{ mac }}, MTU not set
+        IP address {{ ip }}, subnet mask {{ netmask }}
+		{{ pkt_in }} packets input, {{ pkt_in_bytes }} bytes, {{ pkt_in_buffer }} no buffer
+  Traffic Statistics for "{{ nameif }}":
+        {{ pkt_in }} packets input, {{ pkt_in_bytes }} bytes
+        {{ pkt_out }} packets output, {{ pkt_out_bytes }} bytes
+        {{ pkt_drop }} packets dropped
+</group>
